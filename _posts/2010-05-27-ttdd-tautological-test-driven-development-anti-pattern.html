@@ -1,0 +1,584 @@
+---
+layout: post
+status: publish
+published: true
+title: TTDD - Tautological Test Driven Development (Anti Pattern)
+author:
+  display_name: Fabio Pereira
+  login: admin
+  email: fabiopereira.me@gmail.com
+  url: http://fabiopereira.me
+author_login: admin
+author_email: fabiopereira.me@gmail.com
+author_url: http://fabiopereira.me
+wordpress_id: 285
+wordpress_url: http://fabiopereira.me/blog/2010/05/25/ttdd-tautological-test-driven-development-anti-pattern/
+date: '2010-05-27 04:21:00 +1000'
+date_gmt: '2010-05-27 11:21:00 +1000'
+categories:
+- Technical
+tags:
+- Java
+- Code
+- TDD
+comments:
+- id: 6868
+  author: isaiah
+  author_email: isaiahperumalla@gmail.com
+  author_url: http://isaiahperumalla.wordpress.com
+  date: '2010-05-27 02:16:20 +1000'
+  date_gmt: '2010-05-27 09:16:20 +1000'
+  content: "good post, i find this is common test smell, where test code simply duplicates
+    production code, this may also be a hint that your object is exposing its internal
+    through it public api. I tend not to use mocks, if the the collaborator does not
+    change the state of the environment but is just being queried by the object under
+    test. In this case i use light-weight fake implementation which give back canned
+    results for queries.\r\nIn your example i, there is not much else happening in
+    the CarRepository apart from forwarding calls to the carService,  I would probably
+    just write an integration-test to test the car repository"
+- id: 6871
+  author: Fabio Pereira
+  author_email: fabiopereira.me@gmail.com
+  author_url: http://fabiopereira.me
+  date: '2010-05-27 04:25:41 +1000'
+  date_gmt: '2010-05-27 11:25:41 +1000'
+  content: "<a href=\"#comment-6868\" rel=\"nofollow\">@isaiah</a> \r\nHi Isaiah,
+    thanks for the feedback. \r\nYou are right about the fact that there's not much
+    happening in CarRepository, this example is didactic, in the real world this class
+    would be more complex.\r\nI quite liked your description of \"light-weight fake
+    implementation\", I think that's what I called Stubs. I attached the code to the
+    post if you could download, it'd be good to get some feedback from you if that's
+    what I meant. Have a look at the classes: \r\nCarServiceStub and ServiceHeaderFactoryStub.\r\nCheers,"
+- id: 6877
+  author: 'The Morning Brew - Chris Alcock &raquo; The Morning Brew #610'
+  author_email: ''
+  author_url: http://blog.cwa.me.uk/2010/05/28/the-morning-brew-610/
+  date: '2010-05-28 00:38:24 +1000'
+  date_gmt: '2010-05-28 07:38:24 +1000'
+  content: '[...] TTDD - Tautological Test Driven Development (Anti Pattern) - Fabio
+    Pereira discusses an anti-pattern in testing where a test&#8217;s set up is very
+    similar to a test&#8217;s asserts meaning that the asserts are a re-statement
+    of the setup, which results in a lack of meaning to any result. [...]'
+- id: 6917
+  author: Rafael Peixoto de Azevedo
+  author_email: rpazevedo@acm.org
+  author_url: http://symprise.net
+  date: '2010-05-31 08:55:14 +1000'
+  date_gmt: '2010-05-31 15:55:14 +1000'
+  content: "Great post about a fundamental testing issue, Fabio!\r\n\r\nWhen the behaviour
+    of an object under test depends on its context, the tests must provide controlled
+    instances of the necessary contextual objects. I usually prefer to represent them
+    using the simplest forms of double objects.\r\n\r\nSo, I use a mock object to
+    represent a contextual object only when the precise way how the interactions proceed
+    with the object under test is essential to its expected behaviour.\r\n\r\nOtherwise
+    the excessive accidental complexity can easily delude us into writing ineffective
+    tests that are either devoid of relevant assertions or based on tautological thinking.\r\n\r\nI
+    think you have just nailed down the TTDD anti-pattern with a clear example and
+    the perfect name.\r\n\r\nCheers, Rafael"
+- id: 7014
+  author: James Carr
+  author_email: james.r.carr@gmail.com
+  author_url: http://blog.james-carr.org
+  date: '2010-06-11 13:12:24 +1000'
+  date_gmt: '2010-06-11 20:12:24 +1000'
+  content: "Good post. This is a concept I often teach people as well and as a rule
+    of thumb I tell them they should never do a verify against a stub. In your example,
+    both collaborators are providing indirect inputs to the system and in your corrected
+    test case you do the right thing, providing those indirect inputs and verifying
+    the actual behavior of the system under test. \r\n\r\nVerifying a call to a collaborator
+    that provides another indirect input to the system is BAD. I could easily take
+    your first test and in the implementation still call the carService and return
+    null. The code is broken in a horrible way but the test will always pass. Doh!
+    :)"
+- id: 8236
+  author: Test Harder and Smarter | Just about .NET
+  author_email: ''
+  author_url: http://www.just-about.net/?p=392
+  date: '2010-09-27 02:11:17 +1000'
+  date_gmt: '2010-09-27 09:11:17 +1000'
+  content: '[...] and must always kept running. In my eyes it is wrong to demonize
+    TDD. It is more a question of &ldquo;how shall I use it&rdquo; instead of &ldquo;Too
+    Damn [...]'
+- id: 8912
+  author: Susan
+  author_email: sobiafarah@gmail.com
+  author_url: ''
+  date: '2010-11-23 04:46:32 +1100'
+  date_gmt: '2010-11-23 11:46:32 +1100'
+  content: "this code is helping thanks\r\nSasan \r\nCertified <a href=\"http://www.cwnadumps.com\"
+    rel=\"nofollow\">cwna dumps</a>\r\n expert."
+- id: 10272
+  author: Blogging to the Bank Full Review
+  author_email: Scerbo780@gmx.com
+  author_url: http://bloggingtothebank-reviews.com/full-review-of-blogging-to-the-bank/
+  date: '2011-02-10 00:31:55 +1100'
+  date_gmt: '2011-02-10 07:31:55 +1100'
+  content: Searching for this for some time now - i guess luck is far more advanced
+    than look for engines :)
+- id: 18703
+  author: Paul Nelson
+  author_email: Pablosan@SalientBlue.com
+  author_url: http://SalientBlue.com
+  date: '2011-10-20 05:24:01 +1100'
+  date_gmt: '2011-10-20 12:24:01 +1100'
+  content: "Nice post! I find that focusing on behavior (as you mention), while not
+    a guarantee,  is an excellent way to avoid tautological tests.\r\n\r\nOne technique
+    I've used when getting tests around legacy code is to build the test line by line
+    without the help of any mocking framework or test framework code. It helps me
+    discover how the code is behaving. Simply starting a test by instantiating an
+    object with all null parameters can lead to some interesting discoveries.\r\n\r\nWhen
+    I work with teams on the above approach, they often find they don't really need
+    the mocking framework while gaining a deeper understanding of behavior."
+- id: 19443
+  author: Dominick Kanno
+  author_email: Waterfield@gmail.com
+  author_url: http://www.xicom.dk/index.php?action=profile;u=635178
+  date: '2011-11-08 10:33:29 +1100'
+  date_gmt: '2011-11-08 17:33:29 +1100'
+  content: Some  truly   select  articles  on this  web site , bookmarked .
+- id: 45191
+  author: Dwaqxijwbr
+  author_email: nationalityoccupation@aol.com
+  author_url: http://www.monclerjp2012.info/
+  date: '2012-12-12 21:54:19 +1100'
+  date_gmt: '2012-12-13 04:54:19 +1100'
+  content: WqzRxz [url=http://www.topgucci.info/]グッチ アウトレット[/url]
+    UnuQqr HdyAbx [url=http://www.topgucci.info/]GUCCI アウトレット[/url]
+    DzwIdm YfuDkq [url=http://www.topgucci.info/]グッチ 財布[/url] LlgVtc
+    NszVfu http://www.topgucci.info/ HbaAkm
+- id: 50929
+  author: Hpxwot
+  author_email: langkato@mail.ru
+  author_url: http://www.adidasannka.com/
+  date: '2013-02-23 15:40:43 +1100'
+  date_gmt: '2013-02-23 22:40:43 +1100'
+  content: Uzdsgo [url=http://www.paulsmithfashion.com/]ポールスミス アウトレット[/url]
+    Jepmxw Tbioua [url=http://www.paulsmithfashion.com/]ポールスミス 財布[/url]
+    Cakelt Ffucis [url=http://www.paulsmithfashion.com/]Paul Smith アウトレット[/url]
+    Eggdds Ajjzyx http://www.paulsmithfashion.com/ Pulwga Vfyewd [url=http://www.paulsmithtojp.com/]ポールスミス
+    バッグ[/url] Xvwhwr Mntdug [url=http://www.paulsmithtojp.com/]ポールスミス
+    財布[/url] Qoscqe Qjmuxz [url=http://www.paulsmithtojp.com/]ポールスミス
+    アウトレット[/url] Dusqtt Xubtwx http://www.paulsmithtojp.com/ Ajifmy
+    Ctsgbh [url=http://www.guccilive2013.com/]グッチ 財布[/url] Xzfuyt
+    Wjrhel [url=http://www.guccilive2013.com/]グッチ バッグ[/url] Uesmda
+    Qoqgzf [url=http://www.guccilive2013.com/]グッチ アウトレット[/url] Lfphhf
+    Emirnt http://www.guccilive2013.com/ Sjclrq Xdxlah [url=http://www.paulsmithforjp.com/]ポールスミス
+    財布[/url] Tkykfj Lioeno [url=http://www.paulsmithforjp.com/]ポールスミス
+    アウトレット[/url] Vlxzpa Rlsmny [url=http://www.paulsmithforjp.com/]ポールスミス
+    バッグ[/url] Vtggub Fhdyuf http://www.paulsmithforjp.com/ Nsxuvw
+    Alnmqa [url=http://www.watchburando.com/]ポールスミス 時計[/url] Wwgtyw
+    Abvink [url=http://www.watchburando.com/]ポールスミス [/url] Sadluy
+    Rjllqe [url=http://www.watchburando.com/]バリー 腕時計[/url] Cezxjg
+    Iuqlac http://www.watchburando.com/ Ulshft Untvip [url=http://www.gucciwatchjp.com/]グッチ
+    時計[/url] Vzhyeo Znfpfe [url=http://www.gucciwatchjp.com/]グッチ 腕時計[/url]
+    Yjlgxf Dprzrp [url=http://www.gucciwatchjp.com/]gucci 時計[/url]
+    Qhznqo Wlrxrq http://www.gucciwatchjp.com/ Bggezn
+- id: 55206
+  author: Jakyaftef
+  author_email: discounthandbagsoutletorg@hotmail.com
+  author_url: http://www.thebestshopping.tk
+  date: '2013-04-09 21:20:14 +1000'
+  date_gmt: '2013-04-10 04:20:14 +1000'
+  content: "I fancy [url=http://neurosensorycenters.com/web/handbags.html]グッチ
+    バッグ[/url]\r\n that more than joint junk companies abolished help of the pressure
+    of themselves bottleneck. In perpetuity copying[url=http://neurosensorycenters.com/web/handbags.html]グッチ
+    バッグ[/url]\r\n  and fake, that this effort intent energetic forever bottleneck
+    can not be developed, and some may subsist to [url=http://neurosensorycenters.com/web/handbags.html]バッグ
+    人気[/url]\r\n deception the dejection closed their doors. Hold, in situation
+    of of opinion how to deride cured, how to trade in the clockwork and concern,
+    but the inventive enterprising design. Do a dependable job of baggage theme, proviso
+    [url=http://neurosensorycenters.com/web/handbags.html]PRADA リュック[/url]\r\n
+    rely on the mistress devise forte, you indigence to go doused of the bottleneck
+    sales, companies should be more utterance[url=http://neurosensorycenters.com/web/handbags.html]財布
+    メンズ[/url]\r\n  into developing and mining things outline[url=http://neurosensorycenters.com/web/handbags.html]PRADA
+    リュック[/url]\r\n  talent. \r\n[b]www.discounthandbagsoutlet.org[/b]"
+- id: 57818
+  author: cars
+  author_email: niki.koontz@gmail.com
+  author_url: http://www.cars.com
+  date: '2013-05-21 17:35:08 +1000'
+  date_gmt: '2013-05-22 00:35:08 +1000'
+  content: "Buying a car is not for the faint of heart - it can cause \r\nyou to break
+    out in a sweat at the salesman runs his pitch on you.\r\n\r\nDon't worry! The
+    tips in this article will ensure you're prepared for the battle which lies ahead,
+    \r\nallowing you to get the bargain you deserve."
+- id: 58328
+  author: cars
+  author_email: akilahperryman@freenet.de
+  author_url: http://www.cars.com
+  date: '2013-06-01 10:42:14 +1000'
+  date_gmt: '2013-06-01 17:42:14 +1000'
+  content: "The process of car shopping can be lengthy. You have so many options,
+    not to mention things to consider as you compare \r\neach one. You will be able
+    to make the right decision if \r\nyou know enough about car shopping. Here are
+    \r\nsome great tips on buying a car."
+- id: 92625
+  author: nike montante femme
+  author_email: axxnfxieirh@gmail.com
+  author_url: http://www.safariuganda.com/lacoste-pas-cher.asp?id=nike-montante-femme
+  date: '2014-01-15 14:15:16 +1100'
+  date_gmt: '2014-01-15 21:15:16 +1100'
+  content: "There is an erotic massage which is very popular among guys. Most of the
+    individuals want to take a look at the London simply to knowledge the really well-known
+    erotic sensual therapeutic massage. This really is precisely what can be the menu
+    of massage London parlors whenever you planning to guide solutions of women in
+    the massage parlor.\r\nnike montante femme http://www.safariuganda.com/lacoste-pas-cher.asp?id=nike-montante-femme"
+- id: 96237
+  author: vente de air max pas cher
+  author_email: ''
+  author_url: http://www.moulin-a-vent.com/shox-bebe.asp?id=vente-de-air-max-pas-cher
+  date: '2014-01-23 11:28:30 +1100'
+  date_gmt: '2014-01-23 18:28:30 +1100'
+  content: |-
+    <strong>vente de air max pas cher...</strong>
+
+    have her (purse) all of your daily life, states Xavier Le Borgne, head of branded retail at Lancel. feel a bag is a great deal more vital for any woman than jewelry. It much more private....
+- id: 107561
+  author: szybkie kredyty przez internet
+  author_email: shoshanaconnors@gmail.com
+  author_url: http://fcore.ws/szybkapozyczkadlazadluzonych775252
+  date: '2014-03-28 22:15:06 +1100'
+  date_gmt: '2014-03-29 05:15:06 +1100'
+  content: "Hi I am so glad I found your blog page, I really found you by accident,
+    while I was \r\nresearching on Askjeeve for something else, Anyhow I am here now
+    and \r\nwould just like to say thanks a lot for a marvelous post and a all round
+    exciting blog \r\n(I also love the theme/design), I don&rsquo;t have time
+    to read it all \r\nat the minute but I have saved it and also included your RSS
+    feeds, so when I have time I will be back to read much more, Please do keep up
+    the great jo."
+- id: 109038
+  author: Guilherme
+  author_email: guilherme@reiscampos.com.br
+  author_url: ''
+  date: '2014-04-25 04:28:58 +1000'
+  date_gmt: '2014-04-25 11:28:58 +1000'
+  content: "Hi Fabio,\r\n\r\nThank you for writing about this topic. there's a formal
+    definition for tautological tests? i've see this term used at another text but
+    i can't find any source in books/papers.\r\n\r\nThank you"
+- id: 109329
+  author: Fabio Pereira &raquo; Mockists are dead. Long live Classicists
+  author_email: ''
+  author_url: http://fabiopereira.me/blog/2014/05/09/mockists-are-dead-long-live-classicists/
+  date: '2014-05-09 12:00:39 +1000'
+  date_gmt: '2014-05-09 19:00:39 +1000'
+  content: '[...] or other integration points. The main issues come up when we isolate
+    our code from our own code.&nbsp;Tautological TDD is an anti-pattern that explains
+    some of the reasons why mocking and stubbing too much is [...]'
+- id: 109360
+  author: Fabian
+  author_email: schneiterfab@gmail.com
+  author_url: ''
+  date: '2014-05-14 03:58:54 +1000'
+  date_gmt: '2014-05-14 10:58:54 +1000'
+  content: "Why then is a tautological test automatically a bad thing? Or what is
+    the alternative - not to test it?\r\n\r\nDefining a test scenario ALWAYS includes
+    redundancy with your implementation: you tell your subject under test how it is
+    supposed to behave, and it behaves like that. In other words, if your code does
+    anything apart from that, that functionality is not tested. So you apply TDD,
+    you should actually never get to a point where you don't have this redundancy.
+    But if we need to write a system with infinite states, such as algorithms, of
+    course we can not test them all. There we must come up with a more sophisticated
+    selection of test cases, one that is sort of inductive. And it is especially in
+    this case that it is helpful to approach the problem with a TDD method, since
+    this reduces the odds of us writing code that induces certain behaviour which
+    we did not forsee.\r\n\r\nApart from that, I don't see how a TEST can be \"too
+    whitebox\" or \"too blackbox\". That depends mainly on your design, not on how
+    and what you test. \r\n\r\nAgain, the alternative is to just not test, which gives
+    me a worse feeling, because that opens the door to allow me to alter code without
+    any test failing. And it also serves as an excuse to simply write less tests in
+    general (broken window principle).\r\n\r\nIMHO the main problem is that test code
+    is often not as flexible as production code. Coders often neglect test code quality
+    (esp. readability, rednundancy) because it is not production code, plus the frameworks
+    are often inferior and people don't use them proficiently."
+- id: 109438
+  author: Bertalan
+  author_email: fodber@interware.hu
+  author_url: ''
+  date: '2014-05-21 07:45:30 +1000'
+  date_gmt: '2014-05-21 14:45:30 +1000'
+  content: "Great article, though nowadays I tend to be more radical about what I
+    consider tautological\r\n<a href=\"#comment-109360\" rel=\"nofollow\">@Fabian</a>
+    Unit testing is just one level of testing - if your unit tests are tautological
+    they probably need to be replaced with some test with value, tests on other levels,
+    system, integration, functional, acceptance tests.\r\nThe only tests which actually
+    have value are the acceptance tests - all lower level tests are only to help finding
+    the erroneous code and not the presence of bugs (as a failing unit test is not
+    necessarily means a functional issue, and the lack of failing unit tests doesn't
+    mean lack of functional defects).\r\nChanging code usually involves changing the
+    tests (which can be done in a wrong way as well) - so actually it is better to
+    have tests on a level, where the tests don't need to be changed when refactoring
+    happens.\r\nIf frameworks and programmers fail to use the tools correctly, then
+    probably you should choose a tool which is easier to use (because that would make
+    you more productive and safe)."
+- id: 111473
+  author: Mockar ou n&atilde;o mockar, eis a quest&atilde;o | iMasters
+  author_email: ''
+  author_url: http://imasters.com.br/desenvolvimento/mockar-ou-nao-mockar-eis-questao/
+  date: '2014-07-14 06:00:44 +1000'
+  date_gmt: '2014-07-14 13:00:44 +1000'
+  content: '[...] Tautological TDD &eacute; um antipadr&atilde;o que explica algumas
+    situa&ccedil;&otilde;es em que o uso excessivo de mocks e stubs &eacute; perigoso.
+    Durante o hangout, foi dito: &#8220;se fa&ccedil;o TDD, eu posso refatorar meu
+    c&oacute;digo&#8220;. Testes &#8220;tautol&oacute;gicos&#8220;, que s&atilde;o
+    muito caixa branca, checam mais intera&ccedil;&otilde;es do que comportamento,
+    geralmente precisam ser modificados quando refatoramos nosso c&oacute;digo. Se
+    voc&ecirc; precisa mudar o seu teste para cada refatora&ccedil;&atilde;o que fizer
+    no seu c&oacute;digo, como saber se a mudan&ccedil;a do c&oacute;digo n&atilde;o
+    quebrou nada? J&aacute; vi muita gente mudar o c&oacute;digo e mudar o teste s&oacute;
+    pra fazer o teste passar. [...]'
+- id: 111474
+  author: Mockar ou n&atilde;o mockar, eis a quest&atilde;o | iMasters
+  author_email: ''
+  author_url: http://imasters.com.br/desenvolvimento/mockar-ou-nao-mockar-eis-questao/
+  date: '2014-07-14 06:00:44 +1000'
+  date_gmt: '2014-07-14 13:00:44 +1000'
+  content: '[...] Tautological TDD &eacute; um antipadr&atilde;o que explica algumas
+    situa&ccedil;&otilde;es em que o uso excessivo de mocks e stubs &eacute; perigoso.
+    Durante o hangout, foi dito: &#8220;se fa&ccedil;o TDD, eu posso refatorar meu
+    c&oacute;digo&#8220;. Testes &#8220;tautol&oacute;gicos&#8220;, que s&atilde;o
+    muito caixa branca, checam mais intera&ccedil;&otilde;es do que comportamento,
+    geralmente precisam ser modificados quando refatoramos nosso c&oacute;digo. Se
+    voc&ecirc; precisa mudar o seu teste para cada refatora&ccedil;&atilde;o que fizer
+    no seu c&oacute;digo, como saber se a mudan&ccedil;a do c&oacute;digo n&atilde;o
+    quebrou nada? J&aacute; vi muita gente mudar o c&oacute;digo e mudar o teste s&oacute;
+    pra fazer o teste passar. [...]'
+- id: 117549
+  author: social media Hoddesdon
+  author_email: colincounts@gawab.com
+  author_url: http://ruralbandanna3373.jimdo.com
+  date: '2014-09-15 17:19:37 +1000'
+  date_gmt: '2014-09-16 00:19:37 +1000'
+  content: "Why people still make use of to read news papers when in this technological
+    \r\nglobe the whole thing is accessibhle on web?"
+- id: 119674
+  author: Tessa
+  author_email: loreenormiston@gmail.com
+  author_url: http://www.nurmuslim.com/index.php/blogs/4026/681/anti-aging-products-why-you-do
+  date: '2014-10-01 04:16:52 +1000'
+  date_gmt: '2014-10-01 11:16:52 +1000'
+  content: "I'm gone to say to my little brother, that he should also go to see this
+    weblog on regular basis to \r\ntake updated from hottest news update."
+- id: 125755
+  author: Eve
+  author_email: deannemanley@gmail.com
+  author_url: http://www.youtube.com/watch?v=t04stOOnO5U
+  date: '2014-10-28 22:35:26 +1100'
+  date_gmt: '2014-10-29 05:35:26 +1100'
+  content: "Thanks A Bunch for this web page, can happily declare we currently \r\nhave
+    a steam shower of our own and we love it"
+- id: 125938
+  author: woolrich kopen
+  author_email: gnpaeds@gmail.com
+  author_url: http://www.nachtlied.nl
+  date: '2014-10-29 15:01:06 +1100'
+  date_gmt: '2014-10-29 22:01:06 +1100'
+  content: Me llaman une session de compositor Colombiano b me encuentro con usted
+    FRAN, los entre ma RIIA kid unas ratas liso que mis dom ACODEM aca en hel Republic
+    of colombia. tienes nuestro socorro. Ambos estamos cvontigo
+- id: 135801
+  author: How mocking can be a recipe for disaster | codertom
+  author_email: ''
+  author_url: http://codertom.com/2014/12/how-mocking-can-be-a-recipe-for-disaster/
+  date: '2014-12-06 05:55:37 +1100'
+  date_gmt: '2014-12-06 12:55:37 +1100'
+  content: '[...] is a modified example from&nbsp;an excellent introduction to the
+    tautological test antipattern&nbsp;by Fabio Pereira, which I am reusing to look
+    at [...]'
+- id: 137457
+  author: Christmas Michael Kors Outlet
+  author_email: gregoriokomine@web.de
+  author_url: http://foodcreate.com/recipes/premo-pasta/spaghetti-with-butter-and-parmesan.html
+  date: '2014-12-14 00:44:04 +1100'
+  date_gmt: '2014-12-14 07:44:04 +1100'
+  content: "Chrіstmas Mіchɑel Kors Outlet We spent four days in Cаbri, them full of
+    \r\nactivіty.The district is opening a brand new building to allow thеir fast
+    gгowing sсɦool enrollment Vandegrift Senilr high school.\r\nFrance 2014 Hоmе Soccer
+    Jerseys"
+- id: 154122
+  author: simpson hangers
+  author_email: dennishewlett@gmail.com
+  author_url: http://www.docdroid.net/l0xu/14157646705462dabeeef96.pdf.html
+  date: '2015-03-07 05:49:22 +1100'
+  date_gmt: '2015-03-07 12:49:22 +1100'
+  content: "This is very attention-grabbing, You're an excessively skilled blogger.\r\nI
+    have joine your feed and look ahead to in quesst of more of \r\nyour excellent
+    post. Additionally, I've shared your website in my \r\nsocial networks"
+- id: 156877
+  author: louis vuitton outlet
+  author_email: ixyyymgckzg@gmail.com
+  author_url: http://www.louisvuittonoutlet.co/
+  date: '2015-03-28 03:41:37 +1100'
+  date_gmt: '2015-03-28 10:41:37 +1100'
+  content: <a href="http://www.louisvuittonoutlet.co/styles-louis-vuitton-siracusa-c-37_58.html"
+    rel="nofollow">Louis Vuitton Siracusa</a>
+- id: 156887
+  author: www.Matrixx.ca
+  author_email: latashiacranfield@t-online.de
+  author_url: http://www.Matrixx.ca/main/groups/online-dating-sites-advice-for-males-dating-recommendations-and-help/members/
+  date: '2015-03-28 04:45:46 +1100'
+  date_gmt: '2015-03-28 11:45:46 +1100'
+  content: "check below, are some entirely not related websites at ours,\r\nnonetheless,
+    they're more dependable sources which we utilize"
+- id: 168910
+  author: capitation
+  author_email: halliehoran@yahoo.com
+  author_url: http://www.eumacfinexiontexecau.com
+  date: '2015-05-19 10:44:30 +1000'
+  date_gmt: '2015-05-19 17:44:30 +1000'
+  content: Yes! Finally someone writes about riesgo.
+- id: 173440
+  author: 不可戰勝
+  author_email: marko_sain@t-online.de
+  author_url: http://www.infocubitakingersoft.com
+  date: '2015-06-02 23:11:24 +1000'
+  date_gmt: '2015-06-03 06:11:24 +1000'
+  content: "Hi there, yeah this paragraph is genuinely fastidious and I have learned
+    lot \r\nof things from it regarding blogging. thanks."
+- id: 175920
+  author: durante
+  author_email: bretboyd@yahoo.com
+  author_url: http://www.pressourstorcelexpre.com
+  date: '2015-06-11 12:55:45 +1000'
+  date_gmt: '2015-06-11 19:55:45 +1000'
+  content: "Hello there, just became aware of your blog through Google, and found
+    \r\nthat it's truly informative. I'm gonna watch out for brussels.\r\n\r\nI will
+    appreciate if you continue this in future.\r\nMany people will be benefited from
+    your writing. Cheers!"
+- id: 177511
+  author: fitflop sko
+  author_email: pxtgneiqqo@gmail.com
+  author_url: http://www.inntre.no/inkluder/sko.asp/
+  date: '2015-06-16 18:54:04 +1000'
+  date_gmt: '2015-06-17 01:54:04 +1000'
+  content: "Fabio Pereira &raquo; TTDD - Tautological Test Driven Development (Anti
+    Pattern)\r\nfitflop sko http://www.inntre.no/inkluder/sko.asp/"
+- id: 183898
+  author: NikeXXX
+  author_email: titusfla08@gugoumail.com
+  author_url: http://www.111.com/
+  date: '2015-07-17 22:54:04 +1000'
+  date_gmt: '2015-07-18 05:54:04 +1000'
+  content: Information with the Yarmouth The game of golf Place M <a href="http://www.111.com/"
+    rel="nofollow">NikeXXX</a> embershipWe've got to all encourag <a href="http://01ok.net/pas-mentionner-le-poids-leg-nike-chaussure-er"
+    rel="nofollow">http://01ok.net/pas-mentionner-le-poids-leg-nike-chaussure-er</a>
+    ement volunteers mainly because that don't have them lots of numerous needful
+    issues would certainly continue to be unfastened. Sadly, some time and income
+    taxes loose  <a href="http://www.iffa.org.au" rel="nofollow">http://www.iffa.org.au</a>
+    time waiting for simply no dude along with t
+- id: 184731
+  author: Yuli
+  author_email: inryyw5233@mail.com
+  author_url: http://www.facebook.com/profile.php?id=100003469636965
+  date: '2015-07-21 21:00:01 +1000'
+  date_gmt: '2015-07-22 04:00:01 +1000'
+  content: thank you 多謝苦瓜兄 reconfirm reursase 按照 CIA exam 官方答案,IA唔應該上報監管當局,而應該上報管理層
+    好了咁就違背了專業操守可能隨時身敗名裂若想早散早著不過最終還會查出秋後算賬 don't forget 頗多的 IA 本身也是會計師 走頭唔撈內審 可能去了做
+    financial controller or operations director, 臨走緊要緊要緊要記得秘密留返啲 hard copies 物證 證明自己已經將
+    non compliance 發一個密函給最高管理層促其正視及早抖正 Better  with their ACK 保著蘿柚 哈哈哈哈哈哈
+---
+<p>One of the advantages of being a consultant is getting to see different environments and being able to visualise and identify patterns and anti-patterns.</p></p>
+<p><em>"An anti-pattern is a pattern that may be commonly used but is ineffective and/or counterproductive in practice" </em><a href="http://en.wikipedia.org/wiki/Anti-pattern">http://en.wikipedia.org/wiki/Anti-pattern</a></p></p>
+<p>As a first step, let&rsquo;s describe TTDD &ndash; Tautological Test Driven Development as an anti-pattern of <a href="http://en.wikipedia.org/wiki/Test-driven_development" target="_blank">TDD</a> (TestDrivenDevelopment). In fact TTDD is a big enemy of the combination <a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development" target="_blank">BDD</a> (BehaviourDrivenDesign) and TDD.</p></p>
+<p>I still have the vivid memory of the day that I was pairing with Dave Coombes and he mentioned that one of the tests I had written was <strong>tautological</strong>.</p></p>
+<p><em>Tautological: - needless, redundant repetition of an idea - repetition of same sense in different words; - the phrase "a beginner who has just started" is tautological </em></p></p>
+<p>I did not quite understand at first why the test was <strong>tautological</strong>, i.e. needless, redundant. As a perfect leader and coach that Dave is, he helped me rewrite the test in a different way and that was when I finally understood what he had meant by that.</p></p>
+<p><strong><span style="text-decoration: underline;">Example</span></strong></p></p>
+<p>The example below is simplified version of the one that Dave and I were using at the time. In this example, we want to test the class <strong>CarRepository</strong> that interacts with 2 collaborators as shown below:</p></p>
+<p><img style="display: block; float: none; margin-left: auto; margin-right: auto; border-width: 0px;" title="Fullscreen capture 26052010 122651 PM" src="http://fabiopereira.me/blog/wp-content/uploads/2010/05/fullscreencapture26052010122651pm.jpg" border="0" alt="Fullscreen capture 26052010 122651 PM" width="550" height="363" /></p></p>
+<p>In order for <strong>CarRepository</strong> to retrieve all the cars from CarService it needs a ServiceHeader that is provided by ServiceHeaderFactory. For the purposes of this example, I&rsquo;ll show the implementation of CarRepository:</p></p>
+<pre class="java">public class CarRepository {<br />
+  private ServiceHeaderFactory serviceHeaderFactory;<br />
+  private CarService carService;</p>
+<p>  public CarRepository(ServiceHeaderFactory serviceHeaderFactory,<br />
+                    CarService carService) {<br />
+    this.serviceHeaderFactory = serviceHeaderFactory;<br />
+    this.carService = carService;<br />
+  }<br />
+  public Cars findAll() {<br />
+    ServiceHeader serviceHeader = serviceHeaderFactory.create();<br />
+    return carService.findAll(serviceHeader);<br />
+  }<br />
+}</pre></p>
+<p><strong><span style="text-decoration: underline;">Tautological Test</span></strong></p></p>
+<p>&nbsp;</p></p>
+<p>The test below is similar to the one I wrote that we described as tautological:</p></p>
+<pre class="java">@Test<br />
+public void shouldRetrieveCarsFromCarServiceUsingTheRightServiceHeader() throws Exception {<br />
+  // GIVEN<br />
+  ServiceHeader serviceHeader = new ServiceHeader();<br />
+  ServiceHeaderFactory serviceHeaderFactoryMock = mock(ServiceHeaderFactory.class);<br />
+  when(serviceHeaderFactoryMock.create()).thenReturn(serviceHeader);<br />
+  CarService carServiceMock = mock(CarService.class);<br />
+  CarRepository carRepository = new CarRepository(serviceHeaderFactoryMock, carServiceMock);</p>
+<p>  // WHEN<br />
+  carRepository.findAll();</p>
+<p>  // THEN<br />
+  verify(carServiceMock).findAll(serviceHeader);<br />
+}</pre></p>
+<p><strong><span style="text-decoration: underline;">Why is this test called <em>Tautological</em>?</span></strong></p></p>
+<p>&nbsp;</p></p>
+<p>One of the definitions of a tautology is: <em>&ldquo;repetition of same sense in different words&rdquo;</em></p></p>
+<p>If you look carefully at these 2 lines of implementation and 2 lines of test:</p></p>
+<p>Test</p></p>
+<ul>
+<li><strong>when(serviceHeaderFactoryMock.create()).thenReturn(serviceHeader);</strong></li>
+<li><strong>verify(carServiceMock).findAll(serviceHeader);</strong></li><br />
+</ul></p>
+<p>Implementation</p></p>
+<ul>
+<li><strong>ServiceHeader serviceHeader = serviceHeaderFactory.create();</strong></li>
+<li><strong>return carService.findAll(serviceHeader);</strong></li><br />
+</ul></p>
+<p>They are almost &ldquo;equivalent&rdquo;. When we write tests this way, most of the time if the implementation changes, we end up changing the expectations of the test as well and yeah, the tests pass <em>automagically</em>. But without knowing much about its <strong>behaviour</strong>. These tests are a mirror of the implementation, therefore tautological.</p></p>
+<p>&nbsp;</p></p>
+<p>The test below verifies the same class CarRepository, but as a black box test, i.e. it does not test the interactions, but the <strong>output</strong> of the repository. Look at the assertion.</p></p>
+<pre class="java">@Test<br />
+public void shouldBeAbleToRetrieveCars() throws Exception {<br />
+  // GIVEN<br />
+  Cars carsFromService = new Cars(new Car("Ferrari"), new Car("Porsche"));<br />
+  CarRepository carRepository = givenARepositoryAttachedToACarServiceWithCars(carsFromService);</p>
+<p>  // WHEN<br />
+  Cars carsFromRepository = carRepository.findAll();</p>
+<p>  // THEN<br />
+  Assert.assertEquals(carsFromService, carsFromRepository);<br />
+}</p>
+<p>private CarRepository givenARepositoryAttachedToACarServiceWithCars(Cars carsFromService) {<br />
+  ServiceHeader serviceHeader = new ServiceHeader();<br />
+  ServiceHeaderFactory serviceHeaderFactoryMock = mock(ServiceHeaderFactory.class);<br />
+  when(serviceHeaderFactoryMock.create()).thenReturn(serviceHeader);<br />
+  CarService carServiceMock = mock(CarService.class);<br />
+  when(carServiceMock.findAll(serviceHeader)).thenReturn(carsFromService);<br />
+  CarRepository carRepository = new CarRepository(serviceHeaderFactoryMock, carServiceMock);<br />
+  return carRepository;<br />
+}</pre></p>
+<p>There is still a big effort to setup the <a href="http://code.google.com/p/mockito/" target="_blank">mocks</a> and inject them into the repository. This has been extracted to the method <strong>givenARepositoryAttachedToACarServiceWithCars</strong>. However, all these mock setups make it harder to understand the intent of the test, the responsibility of the class that we are trying to test. When this happens I usually tend to use <a href="http://martinfowler.com/articles/mocksArentStubs.html" target="_blank">stubs instead of mocks</a>. Here is the same version of the tests, but using Stubs:</p></p>
+<pre class="java">@Test<br />
+public void shouldBeAbleToRetrieveCars() throws Exception {<br />
+  // GIVEN<br />
+  Cars carsFromService = new Cars(new Car("Ferrari"), new Car("Porsche"));<br />
+  CarRepository carRepository = givenARepositoryAttachedToACarServiceWithCars(carsFromService);</p>
+<p>  // WHEN<br />
+  Cars carsFromRepository = carRepository.findAll();</p>
+<p>  // THEN<br />
+  Assert.assertEquals(carsFromService, carsFromRepository);<br />
+}</p>
+<p>private CarRepository givenARepositoryAttachedToACarServiceWithCars(Cars carsFromService) {<br />
+  ServiceHeaderFactory serviceHeaderFactory = new ServiceHeaderFactoryStub();<br />
+  CarService carService = new CarServiceStub(carsFromService);<br />
+  CarRepository carRepository = new CarRepository(serviceHeaderFactory, carService);<br />
+  return carRepository;<br />
+}<br />
+</pre></p>
+<p>&nbsp;</p></p>
+<p><a href="http://fabiopereira.me/files/TTDD.zip"><img style="display: block; float: none; margin-left: auto; margin-right: auto; border-width: 0px;" title="download ttdd example" src="http://fabiopereira.me/img/downloadIcon.jpg" border="0" alt="download ttdd example" /> </a></p></p>
+<div><a href="http://fabiopereira.me/files/TTDD.zip">Download all the code from the example</a></div></p>
+<p><a href="http://fabiopereira.me/files/TTDD.zip"> </a> It is not a rule, but I find that tautological tests have more mock setup. When we start to think about the collaborators as stubs, the tests become more behavioural.</p></p>
+<p>&nbsp;</p></p>
+<p><strong><span style="text-decoration: underline;">What are the common characteristics of a Tautological Test?</span></strong></p></p>
+<ul>
+<li>Asserts more interactions with collaborators than the outputs;</li>
+<li>It doesn&rsquo;t really test the behaviour of the class, but only its implementation</li>
+<li>The test is too white box</li>
+<li>Too much mock setup deviates the intent of the test</li>
+<li>Adding a new feature or changing an existing one requires changing mock expectations</li><br />
+</ul></p>

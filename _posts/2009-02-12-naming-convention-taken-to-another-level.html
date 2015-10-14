@@ -1,0 +1,80 @@
+---
+layout: post
+status: publish
+published: true
+title: Naming Convention taken to another level
+author:
+  display_name: Fabio Pereira
+  login: admin
+  email: fabiopereira.me@gmail.com
+  url: http://fabiopereira.me
+author_login: admin
+author_email: fabiopereira.me@gmail.com
+author_url: http://fabiopereira.me
+wordpress_id: 76
+wordpress_url: http://fabiopereira.me/blog/?p=76
+date: '2009-02-12 04:12:11 +1100'
+date_gmt: '2009-02-12 11:12:11 +1100'
+categories:
+- Technical
+tags:
+- Java
+- Code
+comments:
+- id: 308
+  author: Alexandre Martins
+  author_email: amartinsn@gmail.com
+  author_url: http://blog.m.artins.net
+  date: '2009-02-19 07:07:38 +1100'
+  date_gmt: '2009-02-19 14:07:38 +1100'
+  content: "Uncle Bob has an interesting theory regarding the length of variable names.\r\nHe
+    states that the it should be proportional to the context it is applied. \r\nSo
+    for example if you are defining a variable name inside a method, where you can
+    easily spot its meaning, you can make it small. Otherwise make it meaningful."
+---
+<p>Do you think it would it be easier to maintain, understand and increment a code where all the variables that represent the same "thing" are named consistently throughout the code base?<br />
+<br><br />
+<a href="http://www.thekua.com/atwork/2009/02/what-differences-cause-your-project-death/">Pat</a> talks about "differences that cause your project death", I wanted to explore a little bit more one of them: Naming...   </p>
+<p><strong>Have you ever seen something similar?</strong></p>
+<pre name="code" class="java">
+PersonalBankAccount account<br />
+...<br />
+PersonalBankAccount personalAccount<br />
+...<br />
+PersonalBankAccount bankAccount<br />
+...<br />
+PersonalBankAccount pAccount<br />
+...<br />
+PersonalBankAccount pba<br />
+...<br />
+PersonalBankAccount pbAccount<br />
+</pre></p>
+<p>Different names would help if they add any value to the instance, but the aforementioned examples are a result of different "coding styles" amongst different developers. Some of us like to type, others like to use code completion and it's dependent on the IDE they are using. </p>
+<p>Most of the projects that I've worked used <a href="http://checkstyle.sourceforge.net" target="blank">checkstyle</a> to enforce code standards. One of the standard checks I've always seen is the <a href="http://checkstyle.sourceforge.net/config_naming.html" target="blank">Naming Convention</a>, which checks identifiers for particular code elements.<br />
+If we are following Sun coding conventions, the code below, for example, would generate a checkstyle error </p>
+<pre name="code" class="java">
+public static final Year minimumYear = new Year(1900); // WRONG<br />
+public static final Year MINIMUM_YEAR = new Year(1900); // RIGHT<br />
+</pre><br />
+because a constant should follow the regular expression <b>^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$  </b><br />
+<br><br />
+So, code standards are advantageous! Therefore, we can use the same concept to avoid the PersonalBankAccount example.<br />
+<br><br />
+What I usually do is totally informal, but I try to define with the team an initial convention, <a href="http://en.wikipedia.org/wiki/CamelCase">Camel Case</a> with all the words for example, </p>
+<pre name="code" class="java">
+PersonalBankAccount personalBankAccount // wherever possible<br />
+</pre></p>
+<p><br><br />
+Sometimes we need more than one instance in the same block, I like suffixes:</p>
+<pre name="code" class="java">
+PersonalBankAccount personalBankAccountToTransferMoneyTo<br />
+PersonalBankAccount personalBankAccountSourceOfMoney<br />
+</pre><br />
+<br><br />
+This is an exception though, wherever possible, use the convention.<br />
+<br><br />
+But always bear in mind that this is not a rule that you can't break, it's just a convention...<br />
+<br><br />
+I have never seen any tool, or checkstyle check, that could generate something like:<br />
+<br><br />
+<b>"Number of different instance names for class T"</b>, maybe it'd be interesting... But that's another, another, another level... :)</p>

@@ -1,0 +1,65 @@
+---
+layout: post
+status: publish
+published: true
+title: Dry your view using refactor and conventions
+author:
+  display_name: Fabio Pereira
+  login: admin
+  email: fabiopereira.me@gmail.com
+  url: http://fabiopereira.me
+author_login: admin
+author_email: fabiopereira.me@gmail.com
+author_url: http://fabiopereira.me
+wordpress_id: 108
+wordpress_url: http://fabiopereira.me/blog/?p=108
+date: '2009-03-29 01:46:07 +1100'
+date_gmt: '2009-03-29 08:46:07 +1100'
+categories:
+- Technical
+tags:
+- Agile
+- Java
+- Code
+comments:
+- id: 577
+  author: Dolphin Wan
+  author_email: dolphin.wan@gmail.com
+  author_url: ''
+  date: '2009-03-29 06:56:25 +1100'
+  date_gmt: '2009-03-29 13:56:25 +1100'
+  content: "Great article!\r\n\r\nWhen I saw your example, I quickly recognized that
+    the conventions (or the pattern) you are trying to extract are actually what the
+    Stripes Framework has provided.\r\n\r\nhttp://www.stripesframework.org/display/stripes/Tag+Library+Doc"
+---
+<p><a target="blank" href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> is a concept applied quite broadly in code. In a web application it's also important to extrapolate its use to the <a target="blank" href="http://en.wikipedia.org/wiki/Model-view-controller">view</a> layer (<a target="blank" href="http://en.wikipedia.org/wiki/Model-view-controller">MVC</a>) in order to increase clarity and consistency. </p>
+<p>At the end of this post I'll explain how a user story that had to be delivered became much easier to implement because we had a <a target="blank" href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">dry</a> and <a target="blank" href="http://www.refactoring.com">refactored</a> view.</p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/PleaseDryMyView.png" alt="Image" border="0"/></div></p>
+<p><strong>Concrete example of a view pattern being refactored and dryed</strong></p>
+<p>As I usually try to explain things by example, I'll show a <a target="blank" href="http://java.sun.com/products/jsp/">JSP</a> that can be <a target="blank" href="http://www.refactoring.com/">refactored</a> and dried. Please notice that the idea of <strong>refactoring and drying your view using conventions is technology agnostic</strong> and can be achieved with other languages and frameworks as well.</p>
+<p>Let's say we have to implement this form:</p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/FormEmpty.png" alt="Image" border="0"/></div></p>
+<p>The example below shows one way of implementing the aforementioned form using <a target="blank" href="http://static.springframework.org/spring/docs/2.0.x/reference/mvc.html">Spring MVC</a> JSP tags.</p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/StepByStepLarge.png" alt="Image" border="0"/></div></p>
+<p>The convention used was that the default label will be <strong>label.${id}</strong>.</p>
+<p><strong>Tag Files and Conventions</strong><br />
+If you want to know how to create your own <a target="blank" href="http://articles.techrepublic.com.com/5100-10878_11-5215024.html">JSP 2.0 tag file</a>, like the one created above (form-ext:inputText), <a target="blank" href="http://articles.techrepublic.com.com/5100-10878_11-5215024.html">here are</a> <a target="blank" href="http://www.onjava.com/pub/a/onjava/excerpt/jserverpages3_ch11/index.html">a few</a> <a target="blank" href="http://www.oracle.com/technology/pub/articles/cioroianu_tagfiles.html">tutorials</a>.<br />
+But always remember about the <a target="blank" href="http://en.wikipedia.org/wiki/Convention_over_Configuration">conventions over configurations</a>. </p>
+<p>Here is the file that was used to implement form-ext:inputText:</p>
+<p>You can download it if you want: <a target="blank" href="http://fabiopereira.me/postfiles/DryYourView/inputText.tag">inputText.tag</a></p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/InputTextTag.png" alt="Image" border="0"/></div></p>
+<p>If the user of the tag (inputText.tag) still wants to send the parameters <strong>label, size and maxlength</strong>, they would be able to do so. They are not required and have default values, though. </p>
+<p>Basically if you apply these two concepts (Tag Files and Conventions) you can dry your JSP's... But you have to identify the duplication patterns.</p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/JSPDryer.png" alt="Image" border="0"/></div></p>
+<p><strong>Extract Tag File - A view refactor similar to <a target="blank" href="http://www.refactoring.com/catalog/extractMethod.html">Extract Method</a></strong></p>
+<p>What was shown above is a step by step of a refactor that I call <strong>Extract Tag File</strong>. It's quite similar to extracting a method, but instead of code, we have JSP.<br />
+I wish the IDEs had this refactor implemented ... Who knows someday... Or maybe we could write a plug-in for <a target="blank" href="http://www.eclipse.org/">Eclipse</a> or <a target="blank" href="http://www.jetbrains.com/idea/">IntelliJ</a>.</p>
+<p><strong>How we applied this on a real project to deliver business value quickly</strong></p>
+<p>Recently, on my current project, we had to change the way the error messages were shown to the user. They had to be field context aware, which means that if there was an error related to the field "Given Name", the error message had to be show next to the field. </p>
+<p><strong>This is what we had before:</strong></p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/FormErrorOnTop.png" alt="Image" border="0"/></div></p>
+<p><strong>This is what we had to implement:</strong></p>
+<div style="text-align:center;"><img src="http://fabiopereira.me/postfiles/DryYourView/images/FormErrorNextToFields.png" alt="Image" border="0"/></div></p>
+<p>Can you imagine how much easier it was just because we had our DRY VIEW? Our fields were wrapped and, therefore, it was just a matter of implementing this inside the tag file... <br /><br />
+<br /></p>
+<p>That's what we aim... Deliver business value quickly!!! Happy client... Happy developers...</p>

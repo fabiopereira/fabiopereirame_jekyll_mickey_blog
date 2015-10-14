@@ -1,0 +1,140 @@
+---
+layout: post
+status: publish
+published: true
+title: Testing Ajax with WebDriver &ndash; Make your tests deterministic
+author:
+  display_name: Fabio Pereira
+  login: admin
+  email: fabiopereira.me@gmail.com
+  url: http://fabiopereira.me
+author_login: admin
+author_email: fabiopereira.me@gmail.com
+author_url: http://fabiopereira.me
+wordpress_id: 408
+wordpress_url: http://fabiopereira.me/blog/2011/08/23/testing-ajax-with-webdrivermake-your-tests-deterministic/
+date: '2011-08-24 18:00:42 +1000'
+date_gmt: '2011-08-25 01:00:42 +1000'
+categories:
+- Technical
+tags:
+- Code
+- javascript
+comments:
+- id: 15860
+  author: Adam Scott
+  author_email: adam.d.scott@gmail.com
+  author_url: http://onth.at/
+  date: '2011-08-24 19:34:38 +1000'
+  date_gmt: '2011-08-25 02:34:38 +1000'
+  content: Do you inject this into pages only during testing, or is this packaged
+    and deployed with the application?
+- id: 15874
+  author: Fabio Pereira
+  author_email: fabiopereira.me@gmail.com
+  author_url: http://fabiopereira.me
+  date: '2011-08-25 06:40:19 +1000'
+  date_gmt: '2011-08-25 13:40:19 +1000'
+  content: "<a href=\"#comment-15860\" rel=\"nofollow\">@Adam Scott</a> \r\nWe
+    haven't gone live yet so it's good that you brought this up. It wouldn't hurt
+    going live with it though, but we'll probably try to remove it. It should be quite
+    simple since both Http and HttpAsyncDecorated have the same interface and we use
+    that JS App Context to wire things..."
+---
+<p>We had some <a href="http://martinfowler.com/articles/nonDeterminism.html#AsynchronousBehavior" target="_blank">non-deterministic</a> tests on our project so we decided to implement a generic way to test ajax calls using <a href="http://code.google.com/p/selenium/" target="_blank">webdriver</a>. I was quite impressed with how quickly we achieved this, mainly due to the fact that javascript is dynamic and functional. And also thanks to my js learning sessions with <a href="http://blog.cuttleworks.com/about.html">Romain</a>, who is also responsible for a great majority of the js code below :)</p>
+<p>Here&rsquo;s the code, split into well defined components as we&rsquo;ve been treating javascript as a first class language. It has also been unit tested, but I'll save that for another post.</p>
+<h3>Http</h3><br />
+A wrapper around jquery ajax</p>
+<pre class="java" name="code">var Async = Async || {};<br />
+Async.Http = function() {</p>
+<p>    function get(url, data, successHandler, errorHandler) {<br />
+        $.ajax({<br />
+            url: url,<br />
+            data: data,<br />
+            dataType: 'json',<br />
+            contentType: 'application/json; charset=utf-8',<br />
+            async: false,<br />
+            success: successHandler,<br />
+            error: errorHandler<br />
+        });<br />
+    }</p>
+<p>    function post(url, data, successHandler, errorHandler) {<br />
+        $.ajax({<br />
+            type: 'POST',<br />
+            url: url,<br />
+            data: JSON.stringify(data),<br />
+            dataType: 'json',<br />
+            contentType: 'application/json; charset=utf-8',<br />
+            success: successHandler,<br />
+            error: errorHandler<br />
+        });<br />
+    }</p>
+<p>    return {<br />
+        get: get,<br />
+        post: post<br />
+    };</p>
+<p>};</pre></p>
+<h3>Notifier</h3><br />
+A stateful js component that keeps track of all the ajax calls and adds a div to the dom with that information.</p>
+<pre class="java" name="code">var Async = Async || {};<br />
+Async.Notifier = function() {</p>
+<p>    var $notifierElement = $('
+<div id="asyncNotifier" class="done">');<br />
+    $('body').append($notifierElement);    </p>
+<p>    var inProgress = 0;</p>
+<p>    function start() {<br />
+        ++inProgress;<br />
+        $notifierElement.removeClass('done');<br />
+    }</p>
+<p>    function finished() {<br />
+        --inProgress;<br />
+        if (inProgress === 0) {<br />
+            $notifierElement.addClass('done');<br />
+        }<br />
+    }</p>
+<p>    return {<br />
+        start: start,<br />
+        finished: finished<br />
+    };</p>
+<p>};</pre></p>
+<h3>HttpAsyncDecorated</h3><br />
+A decorated version of Async.Http that uses Notifier.</p>
+<pre class="java" name="code">var Async = Async || {};<br />
+Async.HttpAsyncDecorated = function(http, asyncNotifier) {</p>
+<p>    function decorateWithFinish(handler) {<br />
+        return function(data, textStatus, jqXHR) {<br />
+            handler(data, textStatus, jqXHR);<br />
+            asyncNotifier.finished();<br />
+        };<br />
+    }</p>
+<p>    function get(url, data, successHandler, errorHandler) {<br />
+        asyncNotifier.start();<br />
+        http.get(url, data, decorateWithFinish(successHandler), decorateWithFinish(errorHandler));<br />
+    }</p>
+<p>    function post(url, data, successHandler, errorHandler) {<br />
+        asyncNotifier.start();<br />
+        http.post(url, data, decorateWithFinish(successHandler), decorateWithFinish(errorHandler));<br />
+    }</p>
+<p>    return {<br />
+        get: get,<br />
+        post: post<br />
+    };</p>
+<p>};</pre></p>
+<h3>JS App Context (Wiring things together)</h3><br />
+Here&rsquo;s the js code that glues everything together&hellip; Like a <strong><em>&ldquo;javascript app context&rdquo;</em></strong>.</p>
+<pre class="java" name="code">var MyAppMain = MyAppMain || {};<br />
+MyAppMain.Context = function() {<br />
+    function startup() {<br />
+        var http = Async.HttpAsyncDecorated(Async.Http(), Async.Notifier());<br />
+	MyApp.SomethingThatUsesAjaxHttp(http);<br />
+    }</p>
+<p>    return {<br />
+        startup: startup<br />
+    };<br />
+};</pre></p>
+<h3>WebDriver</h3><br />
+And finally we need to use webdriver to wait for the div with the class asyncNotifier. We used <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/support/ui/WebDriverWait.html" target="_blank">WebDriverWait</a> for that.</p>
+<pre class="java" name="code">public static void waitForAsyncCallsToFinish(WebDriver driver)<br />
+{<br />
+	waitForCssClass(driver, By.id("asyncNotifier"), "done");<br />
+}</pre></p>

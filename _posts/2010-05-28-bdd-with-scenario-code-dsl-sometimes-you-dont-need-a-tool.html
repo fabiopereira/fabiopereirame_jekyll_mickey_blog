@@ -1,0 +1,121 @@
+---
+layout: post
+status: publish
+published: true
+title: BDD with Scenario Code DSL &ndash; Sometimes you don&rsquo;t need a tool
+author:
+  display_name: Fabio Pereira
+  login: admin
+  email: fabiopereira.me@gmail.com
+  url: http://fabiopereira.me
+author_login: admin
+author_email: fabiopereira.me@gmail.com
+author_url: http://fabiopereira.me
+wordpress_id: 302
+wordpress_url: http://fabiopereira.me/blog/2010/05/27/bdd-with-scenario-code-dsl-sometimes-you-dont-need-a-tool/
+date: '2010-05-28 23:10:30 +1000'
+date_gmt: '2010-05-29 06:10:30 +1000'
+categories:
+- Technical
+tags:
+- Java
+- Code
+- TDD
+- BDD
+comments:
+- id: 18698
+  author: Dorsey Boyl
+  author_email: Bogdon@dataorg.de
+  author_url: http://containerdienst-web.de
+  date: '2011-10-20 02:29:06 +1100'
+  date_gmt: '2011-10-20 09:29:06 +1100'
+  content: I rattling pleased to find this web site on bing, just what I was searching
+    for :D as well saved to fav.
+- id: 19599
+  author: Ashutosh
+  author_email: anutpat@gmail.com
+  author_url: ''
+  date: '2011-11-12 14:42:34 +1100'
+  date_gmt: '2011-11-12 21:42:34 +1100'
+  content: "Hi,\r\n\r\nThanks for the nice post. But where is the DSL class?\r\n\r\nAshutosh"
+- id: 183294
+  author: MofSeek
+  author_email: 13mofegus@klerom.in
+  author_url: http://www.netvibes.com/xanax2mg
+  date: '2015-07-14 14:51:17 +1000'
+  date_gmt: '2015-07-14 21:51:17 +1000'
+  content: Cocaine Interaction Snorting Xanax  Xanax Autoimmune . Xanax Pink Football
+    Xanax 93 833  Pics Pills Snorting Xanax Vicodin Red Wine Xanax Ambien Xanax And
+    Acid Reflux Esophageal Xanax And Gerd . Xanax Pub Strength Oral Use Xanax Alprazolam
+    Recreational Use Xanax For Fainting <a href="http://www.netvibes.com/xanax2mg"
+    rel="nofollow">order xanax online</a>. Xanax Versus Ativan Panic Attack How
+    Do I Get Prescribed To Xanax Anxiety Attacks Xanax Shakes Anxiety Disorder Ssri
+    Or Xanax .
+---
+<p>My previous project was distributed across cities and we had almost 30 people involved. Communication and the understanding of what needs to be done are crucial for the success of the project. </p>
+<p>One of the big challenges was to make sure that the business and the technical people shared the same domain <a href="http://domaindrivendesign.org/node/132" target="_blank">Ubiquitous Language</a>. To ensure that, we started using <a href="http://jbehave.org/" target="_blank">JBehave</a> to define the acceptance criteria of the stories. Half way through, there was a big change which required many changes in the scenarios&hellip; </p>
+<p><strong>Some issues that we found:</strong></p>
+<ul>
+<li>The scenarios are text files and extremely hard to refactor. </li>
+<li>We had to change the text files (scenarios) and the Java files and keep them in sync </li>
+<li>Too much duplication </li>
+<li>When writing the scenarios we had no such thing as auto completion </li>
+<li>When running the scenarios, we could not run 1 scenario at at time, but the whole file </li> </ul>
+<p>&#160;</p>
+<p align="center"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="Slide 28052010 111155 AM" border="0" alt="Slide 28052010 111155 AM" src="http://fabiopereira.me/blog/wp-content/uploads/2010/05/slide28052010111155am.jpg" width="500" height="313" /> </p>
+<p>The solution was to abstract our own <strong>code</strong> with a <strong>DSL layer</strong> and use it for documentation purposes. Initially we called this JMisbehave because the initial intent was to generate a read only version of the code that we could show to non-technical people and agree on acceptance criteria, as well as keep an executable documentation of the application. <strong>Code Humaniser</strong> was another suggested name&hellip; </p>
+<p align="center">&#160;<img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="Fullscreen capture 28052010 42326 PM" border="0" alt="Fullscreen capture 28052010 42326 PM" src="http://fabiopereira.me/blog/wp-content/uploads/2010/05/fullscreencapture2805201042326pm.jpg" width="500" height="272" />&#160; </p>
+<p>Eventually we realised that the code itself was sufficient and we ended up not using the code that generated the read only version of it. Nevertheless it&rsquo;s still useful in many environments. Many times we showed the code to non-technical people and they were quite delighted to see how straight forward it was to read and to understand. Moreover, it was expressing the <strong>Language of the Business</strong>. An interesting thing is that our colleague Dan North, who wrote JBehave, came to our project one day to facilitate a retrospective and we told him the whole story. He quite liked what we had done and was quite complimentary about the fact that we had understood the concept of DDD and BDD, and the fact that it&rsquo;s not about the tools. It was actually his recommendation to use <em><strong>the_underscore_notation</strong></em> instead of <em><strong>theCamelCaseNotation</strong>, </em>we had some discussions about that, but that will be described on another post.</p>
+<p></p>
+<p><strong><u>Behind the Scenes - The Scenario Code DSL Implementation</u></strong></p>
+<p>James Barritt saw another post of mine with some of our Scenarios Code DSL examples and suggested that I wrote a post explaining what was happening &ldquo;behind the scenes&rdquo;.&#160; Here is a high level diagram of how we separated the layers:</p>
+<p align="center">&#160;<img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="Fullscreen capture 28052010 43759 PM" border="0" alt="Fullscreen capture 28052010 43759 PM" src="http://fabiopereira.me/blog/wp-content/uploads/2010/05/fullscreencapture2805201043759pm.jpg" width="400" height="190" /> </p>
+<p></p>
+<p></p>
+<p>Some code:</p>
+<p><strong>Scenarios Code</strong></p>  </p>
+<pre class="java" name="code">
+public class Location_Scenario extends BaseScenario {<br />
+  public void should_default_risk_address_when_insured_address_is_valid_for_risk() {<br />
+    given(the_broker. has_started_a_home_quote());<br />
+    when(the_broker. selects_a_valid_location_for_risk_address());<br />
+    then(the_policy.has_home_risk_location_and_risk_address_as_same());<br />
+  }<br />
+}</p>
+<p>public class BaseScenario {<br />
+  protected Broker the_broker;<br />
+  protected Policy the_policy;<br />
+  (...)</p>
+<p>  protected <T extends DSL> T given(T dsl) {<br />
+    return dsl;<br />
+  }</p>
+<p>  protected <T extends DSL> T when(T dsl) {<br />
+    return dsl;<br />
+  }</p>
+<p>  protected <T extends DSL> T then(T dsl) {<br />
+    return dsl;<br />
+  }</p>
+<p>  protected <T extends DSL> T and(T dsl) {<br />
+    return dsl;<br />
+  }</p>
+<p>}</pre></p>
+<p><strong>DSL Code</strong></p></p>
+<pre class="java" name="code">public class Broker extends DSL {<br />
+  public FieldEnterer enters;<br />
+  public Policy the_policy;</p>
+<p>  public Broker blah() {<br />
+     // call implemenation<br />
+    return this;<br />
+  }<br />
+}</p>
+<p>public class Policy extends DSL {<br />
+  public FieldEnterer enters;<br />
+  (...)<br />
+  public Policy blah() {<br />
+     // call implemenation<br />
+    return this;<br />
+  }<br />
+}</pre></p>
+<p>
+This was a project with lots of people coming in and out all the time and every time someone new would join, the time taken to understand the code and relate it to the business terminology was extremely reduced by the way our tests were written.<br />
+You can do the same on your project, write your tests using the language of the business.</p>
