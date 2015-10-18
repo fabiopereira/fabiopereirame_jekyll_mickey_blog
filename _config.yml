@@ -8,15 +8,15 @@ permalink:           /blog/:year/:month/:day/:title
 relative_permalinks: true
 
 # Setup
-timezone:            your timezone # eg. Asia/Kathmandu
-locale:              your locale language # eg. en_us
+timezone:            Asia/Sydney # eg. Asia/Kathmandu
+locale:              en_us # eg. en_us
 name:				         Fabio Pereira
 title:               'Go see, ask why, show respect'
 tagline:             'tagline'
 description:         'description'
-url:                 site url
+url:                 http://www.fabiopereira.me
 rss:                 rss feed url
-baseurl:             '/'
+baseurl:             '/blog'
 baseurl_posts_img:   '/assets/images/posts/'
 baseurl_featured_img: '/assets/images/hero/'
 baseurl_featured_thumbnail: '/assets/images/thumbnail/'
@@ -27,10 +27,10 @@ disqus:              fabiopereirame # get it on https://disqus.com/admin/
 author:
   name:           	 Fabio Pereira
   url:            	 http://www.fabiopereira.me
-  facebook:          username
+  facebook:          fabiopereira.me
   twitter:           fabiopereira
   google_plus:       username
-  linkedin:          username
+  linkedin:          fabiopereirame
   dribbble:          username
   pinterest:         username
   kiva:              username
