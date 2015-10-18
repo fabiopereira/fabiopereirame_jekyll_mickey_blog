@@ -11,9 +11,9 @@ relative_permalinks: true
 timezone:            Asia/Sydney # eg. Asia/Kathmandu
 locale:              en_us # eg. en_us
 name:				         Fabio Pereira
-title:               'Go see, ask why, show respect'
-tagline:             'tagline'
-description:         'description'
+title:               'Fabio Pereira'
+tagline:             'Go see, ask why, show respect'
+description:         'A blog with ideas and thoughts on Agile, Digital Transformation and Behavioral Economics'
 url:                 http://www.fabiopereira.me
 rss:                 rss feed url
 baseurl:             '/'
@@ -42,15 +42,6 @@ fb_appid:            your facebook app id
 destination:      	 ./_site
 exclude:          	 [".editorconfig", ".gitignore", "bower.json", "composer.json", "CONTRIBUTING.md", "CNAME", "LICENSE", "Gruntfile.js", "package.json", "node_modules", "README.md", "sass", "haml"]
 port:             	 9001
-
-menus:
-    main:
-    - Home: /
-    - Archives: /archives/
-    - About: /about/
-    side:
-    - Categories: /categories/
-    - Tags: /tags/
 
 defaults:
   -
