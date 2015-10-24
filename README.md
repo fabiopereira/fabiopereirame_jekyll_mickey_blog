@@ -9,5 +9,3 @@ It's a fork from [Vincent Chan's](https://github.com/vincentchan/mickey) amazing
 ## License
 
 Open sourced under the [MIT license](LICENSE.md).
-
-**Disclaimer: This Jekyll theme is not affiliated with Disney. Obviously :)**
