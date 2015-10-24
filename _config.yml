@@ -9,7 +9,7 @@ relative_permalinks: true
 
 # Setup
 timezone:            Asia/Sydney # eg. Asia/Kathmandu
-locale:              en_us # eg. en_us
+locale:              en_AU # eg. en_us
 name:				         Fabio Pereira
 title:               'Fabio Pereira'
 tagline:             'Go see, ask why, show respect'
